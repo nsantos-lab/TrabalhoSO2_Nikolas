@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
+// AGR Q EU CONECTEI NO GIT-HUB, TEM UMA IA AQUI TENTANDO COMPLETAR O QUE EU DIGITO, KKKKK.
 
 // Dimensões do domínio da simulação
 const double BOX_WIDTH = 800.0;
@@ -15,6 +16,7 @@ struct Particle {
     double x, y;   // Posição
     double vx, vy; // Velocidade
     double radius; // Raio da partícula
+    // double nvx, nvy; // Velocidade a ser atualizada (para evitar interferência durante a atualização)
 };
 
 // Inicializa as partículas com posições e velocidades aleatórias
@@ -34,32 +36,55 @@ void initParticles(vector<Particle>& particles, int numParticles) {
 }
 
 // Atualiza a física do sistema de forma sequencial
-void updateSimulation(vector<Particle>& particles) {
+void updateForces(vector<Particle>& particles) {
     for (size_t i = 0; i < particles.size(); ++i) {
-        // 1. Aplica a força da gravidade na velocidade vertical
+        // Aplica a força da gravidade na velocidade vertical
         particles[i].vy += GRAVITY * DT;
 
-        // 2. Atualiza a posição com base na velocidade
+        // Trata colisão com as bordas verticais (Esquerda e Direita)
+        if (particles[i].x - particles[i].radius < 0) {
+            particles[i].vx = -particles[i].vx; // Inverte a velocidade horizontal
+        } else if (particles[i].x + particles[i].radius > BOX_WIDTH) {
+            particles[i].x = BOX_WIDTH - particles[i].radius; // Força a partícula para dentro da caixa
+            particles[i].vx = -particles[i].vx; // Inverte a velocidade horizontal
+        }
+
+        // Trata colisão com as bordas horizontais (Teto e Chão)
+        if (particles[i].y - particles[i].radius < 0) {
+            particles[i].vy = -particles[i].vy; // Inverte a velocidade vertical
+        } else if (particles[i].y + particles[i].radius > BOX_HEIGHT) {
+            particles[i].y = BOX_HEIGHT - particles[i].radius; // Força a partícula para dentro da caixa
+            particles[i].vy = -particles[i].vy; // Inverte a velocidade vertical
+        }
+
+        // Trata colisão entre partículas
+        for (size_t j = 0; j < particles.size(); ++j) {
+            if (j != i) { // Para não ser a mesma partícula
+                double dx = particles[j].x - particles[i].x;
+                double dy = particles[j].y - particles[i].y;
+                double distance = sqrt(dx * dx + dy * dy);
+                double minDistance = particles[i].radius + particles[j].radius;
+
+                if (distance < minDistance) {
+                    // De acordo com as regras de colisão elástica, se é trocada as velocidades das partículas
+                    double troca = particles[i].vx;
+                    particles[i].vx = particles[j].vx;
+                    particles[j].vx = troca;
+                    troca = particles[i].vy;
+                    particles[i].vy = particles[j].vy;
+                    particles[j].vy = troca;                   
+                }                
+            }
+        }
+    }
+}
+
+// Atualiza a posição das partículas com base nas forças
+void updatePosition(vector<Particle>& particles) {
+    for (size_t i = 0; i < particles.size(); ++i) {
+        // Atualiza a posição com base na velocidade
         particles[i].x += particles[i].vx * DT;
         particles[i].y += particles[i].vy * DT;
-
-        // 3. Trata colisão com as bordas verticais (Esquerda e Direita)
-        if (particles[i].x - particles[i].radius < 0) {
-            particles[i].x = particles[i].radius;
-            particles[i].vx = -particles[i].vx * 0.8; // Perde 20% de energia no impacto
-        } else if (particles[i].x + particles[i].radius > BOX_WIDTH) {
-            particles[i].x = BOX_WIDTH - particles[i].radius;
-            particles[i].vx = -particles[i].vx * 0.8;
-        }
-
-        // 4. Trata colisão com as bordas horizontais (Teto e Chão)
-        if (particles[i].y - particles[i].radius < 0) {
-            particles[i].y = particles[i].radius;
-            particles[i].vy = -particles[i].vy * 0.8;
-        } else if (particles[i].y + particles[i].radius > BOX_HEIGHT) {
-            particles[i].y = BOX_HEIGHT - particles[i].radius;
-            particles[i].vy = -particles[i].vy * 0.8;
-        }
     }
 }
 
@@ -78,7 +103,8 @@ int main() {
 
     // Loop principal da simulação
     for (int step = 0; step < TOTAL_STEPS; ++step) {
-        updateSimulation(particles);
+        updateForces(particles);
+        updatePosition(particles);
 
         // Imprime o estado da primeira partícula a cada 100 passos como amostra
         if ((step % 2 == 0)) {
