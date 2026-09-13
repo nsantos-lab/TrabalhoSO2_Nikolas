@@ -10,7 +10,9 @@ using namespace std;
 const double BOX_WIDTH = 800.0;
 const double BOX_HEIGHT = 600.0;
 const double GRAVITY = -9.81;
-const double DT = 0.01; // Passo de tempo (Delta t)
+const double DT = 0.001; // Passo de tempo (Delta t)
+const double DGravity = 50.0; // Distancia máxima para aplicar a gravidade entre partículas
+const double FGravity = 50.0; // Força da gravidade entre partículas
 
 struct Particle {
     double x, y;   // Posição
@@ -76,6 +78,23 @@ void updateForces(vector<Particle>& particles) {
                 }                
             }
         }
+
+        // Trata a gravidade entre particulas
+        // Já que as partículas possuem a mesma massa, densidade e raio
+        for (size_t j = 0; j < particles.size(); ++j) {
+            if (j != i) { // Para não ser a mesma partícula
+                double dx = particles[j].x - particles[i].x;
+                double dy = particles[j].y - particles[i].y;
+                double distance = sqrt(dx * dx + dy * dy);
+
+                if (distance < DGravity) {
+                    // Aplica a força da gravidade entre as partículas
+                    double force = FGravity / (distance * distance); // Força proporcional à inversa do quadrado da distância 
+                    particles[i].vx += force * (dx / distance);
+                    particles[i].vy += force * (dy / distance);
+                }
+            }
+        }
     }
 }
 
@@ -89,7 +108,7 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 1000;
+    const int NUM_PARTICLES = 10000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;
@@ -106,7 +125,7 @@ int main() {
         updateForces(particles);
         updatePosition(particles);
 
-        // Imprime o estado da primeira partícula a cada 100 passos como amostra
+        // Imprime o estado da primeira partícula
         if ((step % 2 == 0)) {
             cout << "Passo " << step << " | Particula 0 -> Pos: (" 
                              << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
