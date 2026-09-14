@@ -1,38 +1,21 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <string>
 using namespace std;
 
-void hello0() {
-    for (int i = 0; i < 1000; i++) {
-        cout << "Hello0 " << i << endl;
-        //this_thread::sleep_for(chrono::seconds(1));
-    }
-}
-void hello1() {
-    for (int i = 0; i < 1000; i++) {
-        cout << "Hello1 " << i << endl;
-        //this_thread::sleep_for(chrono::seconds(1));
-    }
-}
-void hello2() {
-    for (int i = 0; i < 1000; i++) {
-        cout << "Hello2 " << i << endl;
-        //this_thread::sleep_for(chrono::seconds(1));
+void funcao(int p_limite, string p_string){
+    cout << "String: " << p_string << endl;
+    for (int i=0;i<p_limite;++i){
+        cout << "Sequencia: " << i << endl;
     }
 }
 
 int main() {
-    thread t0(hello0);
-    thread t1(hello1);
-    thread t2(hello2);
+    int i=10;
 
-    t0.join();
-    cout << "Join t0\n";
-    t1.join();
-    cout << "Join t1\n";
-    t2.join();
-    cout << "Join t2\n";
+    thread p0(funcao, i, "Hello World!!");
+    p0.join();
 
     return 0;
 }
