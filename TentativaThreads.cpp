@@ -4,19 +4,19 @@
 using namespace std;
 
 void hello0() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
         cout << "Hello0 " << i << endl;
         //this_thread::sleep_for(chrono::seconds(1));
     }
 }
 void hello1() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
         cout << "Hello1 " << i << endl;
         //this_thread::sleep_for(chrono::seconds(1));
     }
 }
 void hello2() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000; i++) {
         cout << "Hello2 " << i << endl;
         //this_thread::sleep_for(chrono::seconds(1));
     }
