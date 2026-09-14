@@ -1,34 +1,38 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+using namespace std;
 
 void hello0() {
-    for (int i = 0; i < 50; i++) {
-        std::cout << "Hello0 " << i << std::endl;
-        //std::this_thread::sleep_for(std::chrono::seconds(1));
+    for (int i = 0; i < 100; i++) {
+        cout << "Hello0 " << i << endl;
+        //this_thread::sleep_for(chrono::seconds(1));
     }
 }
 void hello1() {
-    for (int i = 0; i < 50; i++) {
-        std::cout << "Hello1 " << i << std::endl;
-        //std::this_thread::sleep_for(std::chrono::seconds(1));
+    for (int i = 0; i < 100; i++) {
+        cout << "Hello1 " << i << endl;
+        //this_thread::sleep_for(chrono::seconds(1));
     }
 }
 void hello2() {
-    for (int i = 0; i < 50; i++) {
-        std::cout << "Hello2 " << i << std::endl;
-        //std::this_thread::sleep_for(std::chrono::seconds(1));
+    for (int i = 0; i < 100; i++) {
+        cout << "Hello2 " << i << endl;
+        //this_thread::sleep_for(chrono::seconds(1));
     }
 }
 
 int main() {
-    std::thread t0(hello0);
-    std::thread t1(hello1);
-    std::thread t2(hello2);
+    thread t0(hello0);
+    thread t1(hello1);
+    thread t2(hello2);
 
     t0.join();
+    cout << "Join t0\n";
     t1.join();
+    cout << "Join t1\n";
     t2.join();
+    cout << "Join t2\n";
 
     return 0;
 }
