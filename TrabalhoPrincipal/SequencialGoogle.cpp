@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-// AGR Q EU CONECTEI NO GIT-HUB, TEM UMA IA AQUI TENTANDO COMPLETAR O QUE EU DIGITO, KKKKK.
 
 // Dimensões do domínio da simulação
 const double BOX_WIDTH = 800.0;
@@ -12,7 +11,7 @@ const double BOX_HEIGHT = 600.0;
 const double GRAVITY = -9.81;
 const double DT = 0.001; // Passo de tempo (Delta t)
 const double DGravity = 50.0; // Distancia máxima para aplicar a gravidade entre partículas
-const double FGravity = 50.0; // Força da gravidade entre partículas
+const double FGravity = 50.0; // Força padrão da gravidade entre partículas
 
 struct Particle {
     double x, y;   // Posição

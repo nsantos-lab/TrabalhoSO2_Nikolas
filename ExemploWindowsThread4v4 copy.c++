@@ -12,10 +12,10 @@ int tam_intervalo = 1000/NTHREADS;
 // Caso seja necessário passar mais de um valor:
 //       Se forem do mesmo tipo: Vetor
 //       Se não forem do mesmo tipo: Struct
-void *contabilizaPares(void *arg){
-    int ini = (int)(long)arg;
-    printf("INICIO: %d\n", ini);
-    int inicio = ini*tam_intervalo;
+void *contabilizaPares(void *arg){ 
+    int ini = (int)(long)arg; 
+    printf("INICIO: %d\n", ini); 
+    int inicio = ini*tam_intervalo; //
     int final = (ini+1)*tam_intervalo;
     for(int i = inicio; i < final; i++){
         if(v[i] % 2 == 0){

@@ -4,7 +4,8 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-// AGR Q EU CONECTEI NO GIT-HUB, TEM UMA IA AQUI TENTANDO COMPLETAR O QUE EU DIGITO, KKKKK.
+
+#define NUM_THREADS 4 // Número de threads a serem usadas na simulação
 
 // Dimensões do domínio da simulação
 const double BOX_WIDTH = 800.0;
