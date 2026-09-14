@@ -5,19 +5,19 @@
 void hello0() {
     for (int i = 0; i < 50; i++) {
         std::cout << "Hello0 " << i << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 void hello1() {
     for (int i = 0; i < 50; i++) {
         std::cout << "Hello1 " << i << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 void hello2() {
     for (int i = 0; i < 50; i++) {
         std::cout << "Hello2 " << i << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
