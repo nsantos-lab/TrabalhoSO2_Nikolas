@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <cstdlib>
-#include <ctime>
 using namespace std;
 
 // Dimensões do domínio da simulação
@@ -73,7 +71,7 @@ void updateForces(vector<Particle>& particles) {
                     particles[j].vx = troca;
                     troca = particles[i].vy;
                     particles[i].vy = particles[j].vy;
-                    particles[j].vy = troca;                   
+                    particles[j].vy = troca;
                 }                
             }
         }
@@ -107,7 +105,7 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 10000;
+    const int NUM_PARTICLES = 100;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;

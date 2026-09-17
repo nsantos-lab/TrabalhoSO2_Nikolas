@@ -1,8 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <cstdlib>
-#include <ctime>
+#include <thread>
 using namespace std;
 
 #define NUM_THREADS 4 // Número de threads a serem usadas na simulação
@@ -22,8 +21,18 @@ struct Particle {
     // double nvx, nvy; // Velocidade a ser atualizada (para evitar interferência durante a atualização)
 };
 
+struct Thread_Controler {
+    int id;
+    bool continuar;
+    bool finalizada;
+    int Bpmin;
+    int Bpmax;
+    int pmin;
+    int pmax;
+};
+
 // Inicializa as partículas com posições e velocidades aleatórias
-void initParticles(vector<Particle>& particles, int numParticles) {
+void initParticles(vector<Particle>& particles, int numParticles, struct Thread_Controler & f0) {
     srand(time(0));
     for (int i = 0; i < numParticles; ++i) {
         Particle p;
@@ -109,11 +118,59 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 10000;
+    const int NUM_PARTICLES = 1000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;
     initParticles(particles, NUM_PARTICLES);
+
+    vector<thread> Vthreads;
+    vector<Thread_Controler> Vthread_controler;
+
+    int range = NUM_PARTICLES/NUM_THREADS;
+    int rmod  = NUM_PARTICLES%NUM_THREADS;
+    
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        Vthread_controler[i];
+        /*
+        int Bpmin;
+        int Bpmax;
+        int pmin;
+        int pmax;
+        */
+        Vthread_controler[i].id = i;
+        Vthread_controler[i].continuar = false;
+        Vthread_controler[i].finalizada = false;
+        if(i==0) { // significa que é o primeiro
+            Vthread_controler[i].Bpmin = 0;
+            Vthread_controler[i].Bpmax = range;
+            
+        }else if(i==NUM_THREADS-1) { // significa que é o ultimo
+            Vthread_controler[i].Bpmin = i*range + 1;
+            Vthread_controler[i].Bpmax = (i+1)*range + rmod;
+            Vthread_controler[i].pmin = Vthread_controler[i].Bpmin;
+            Vthread_controler[i].pmax = Vthread_controler[i].Bpmax;
+        }else {
+            Vthread_controler[i].Bpmin = i*range + 1;
+            Vthread_controler[i].Bpmax = (i+1)*range;
+            Vthread_controler[i].pmin = Vthread_controler[i].Bpmin;
+            Vthread_controler[i].pmax = Vthread_controler[i].Bpmax;
+        }
+        
+        Vthreads.emplace_back(tarefa, i);
+    }
+    cout << "Controlers e Threads Inicializadas\n";
+
+    for (int i=0)
+
+
+
+
+
+
+
+
+
 
     cout << "Iniciando simulacao sequencial de " << NUM_PARTICLES << " particulas...\n"; 
 
