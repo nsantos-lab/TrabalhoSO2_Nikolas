@@ -8,6 +8,8 @@ using namespace std;
 struct thread_controler{
     int id;
     bool finalizada;
+    int Bmin;
+    int Bmax;
     int pmin;
     int pmax;
 };
@@ -26,32 +28,49 @@ int main() {
     int core = 4;
     int range = TAM/core;
     int Mrange = TAM%core;
-    vector<thread_controler> VThread_Controler;
-    VThread_Controler.resize(core);
+    vector<thread_controler> VThread_Controler(core);
 
     for (int i = 0; i < core; i++){
-        //VThread_Controler[i];
         VThread_Controler[i].id = i;
         VThread_Controler[i].finalizada = false;
 
         if (i==0){
-            VThread_Controler[i].pmin = 0;
-            VThread_Controler[i].pmax = range;
+            VThread_Controler[i].Bmin = 0;
+            VThread_Controler[i].Bmax = range;
         }else if (i==core-1){
-            VThread_Controler[i].pmin = range * i + 1;
-            VThread_Controler[i].pmax = (i+1)*range + Mrange -1;
+            VThread_Controler[i].Bmin = range * i + 1;
+            VThread_Controler[i].Bmax = (i+1)*range + Mrange -1;
         }else {
-            VThread_Controler[i].pmin = range * i + 1;
-            VThread_Controler[i].pmax = (i+1)*range;
+            VThread_Controler[i].Bmin = range * i + 1;
+            VThread_Controler[i].Bmax = (i+1)*range;
         }
-        cout << "Thread" << i << " Min:" << VThread_Controler[i].pmin 
-             << " Max:" << VThread_Controler[i].pmax << endl;
+        cout << "Thread" << i << " Min:" << VThread_Controler[i].Bmin 
+             << " Max:" << VThread_Controler[i].Bmax << endl;
+    }
+
+    // seta o range de cada thread
+    for (int i = 0; i < core; i++){
+        VThread_Controler[i].pmin = VThread_Controler[i].Bmin;
+        VThread_Controler[i].pmax = VThread_Controler[i].Bmax;
     }
 
     for (int i = 0; i < core; i++){
         VThreads.emplace_back(funcao, ref(VThread_Controler[i]));
         this_thread::sleep_for(chrono::seconds(1));
     }
+    cout << endl;
+    
+    // set o range de cada thread
+    for (int i = 0; i < core; i++){
+        VThread_Controler[i].pmin = VThread_Controler[i].Bmin;
+        VThread_Controler[i].pmax = VThread_Controler[i].Bmax;
+    }
+
+    for (int i = 0; i < core; i++){
+        cout << "Thread" << i << " Min:" << VThread_Controler[i].pmin 
+             << " Max:" << VThread_Controler[i].pmax << endl;
+    }
+
 
     for (int i = 0; i< core; i++){
         VThreads[i].join();
