@@ -23,7 +23,6 @@ struct Particle {
 
 struct Thread_Controler {
     int id;
-    bool continuar;
     bool finalizada;
     int Bpmin;
     int Bpmax;
@@ -34,7 +33,7 @@ struct Thread_Controler {
 // Inicializa as partículas com posições e velocidades aleatórias
 void initParticles(vector<Particle>& particles, int numParticles, struct Thread_Controler & f0) {
     srand(100);
-    for (f0.pmin; f0.pmin <= f0.pmax; f0.pmin++) {
+    for (; f0.pmin <= f0.pmax; f0.pmin++) {
         Particle p; // cria a particula
         p.radius = 5.0; // Raio fixo para simplificação
         // Garante que a partícula comece totalmente dentro da caixa
@@ -45,6 +44,7 @@ void initParticles(vector<Particle>& particles, int numParticles, struct Thread_
         p.vy = (rand() % 101) - 50;
         particles.push_back(p);
     }
+    f0.finalizada = true;
 }
 
 // Atualiza a física do sistema de forma sequencial
@@ -129,12 +129,13 @@ int main() {
 
     int range = NUM_PARTICLES/NUM_THREADS;
     int rmod  = NUM_PARTICLES%NUM_THREADS;
+
+    Vthread_controler.resize(NUM_THREADS);
     
     for (int i = 0; i < NUM_THREADS; ++i) {
-        Vthread_controler[i];
+        //Vthread_controler[i];
 
         Vthread_controler[i].id = i;
-        Vthread_controler[i].continuar = true;
         Vthread_controler[i].finalizada = false;
 
         if(i==0) { // significa que é o primeiro
@@ -144,7 +145,7 @@ int main() {
             Vthread_controler[i].pmax = Vthread_controler[i].Bpmax;          
         }else if(i==NUM_THREADS-1) { // significa que é o ultimo
             Vthread_controler[i].Bpmin = i*range + 1;
-            Vthread_controler[i].Bpmax = (i+1)*range + rmod;
+            Vthread_controler[i].Bpmax = (i+1)*range + rmod - 1;
             Vthread_controler[i].pmin = Vthread_controler[i].Bpmin;
             Vthread_controler[i].pmax = Vthread_controler[i].Bpmax;
         }else {

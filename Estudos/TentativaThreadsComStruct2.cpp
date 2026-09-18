@@ -2,46 +2,60 @@
 #include <thread>
 #include <chrono>
 #include <string>
+#include <vector>
 using namespace std;
 
 struct thread_controler{
     int id;
-    bool continuar;
     bool finalizada;
-    int Bpmin;
-    int Bpmax;
     int pmin;
     int pmax;
 };
 
-void funcao_f0(struct thread_controler & f0){
-    int i=0;
-    cout << "PMAX: " << f0.pmax << endl;
-    cout << "PMIN: " << f0.pmin << endl;
-    cout << "Entrando no loop...\n";
-
-    for (f0.pmin; f0.pmin <= f0.pmax; f0.pmin++){
-        cout << "PMIN: " << f0.pmin << endl;
+void funcao(struct thread_controler & f0){
+    for (; f0.pmin <= f0.pmax; f0.pmin++){
+        cout << " " << f0.pmin << " ";
     }
     f0.finalizada = true;
 }
 
 int main() {
-    struct thread_controler thread_p0;
-    thread_p0.continuar = true;
-    thread_p0.finalizada = false;
-    thread_p0.pmin = 1;
-    thread_p0.pmax = 10;
+    
+    vector<thread> VThreads;
+    int TAM = 15;
+    int core = 4;
+    int range = TAM/core;
+    int Mrange = TAM%core;
+    vector<thread_controler> VThread_Controler;
+    VThread_Controler.resize(core);
 
-    thread p0(funcao_f0, ref(thread_p0));
-    p0.detach();
+    for (int i = 0; i < core; i++){
+        //VThread_Controler[i];
+        VThread_Controler[i].id = i;
+        VThread_Controler[i].finalizada = false;
 
-    this_thread::sleep_for(chrono::seconds(7));
-    //thread_p0.continuar = false;
+        if (i==0){
+            VThread_Controler[i].pmin = 0;
+            VThread_Controler[i].pmax = range;
+        }else if (i==core-1){
+            VThread_Controler[i].pmin = range * i + 1;
+            VThread_Controler[i].pmax = (i+1)*range + Mrange -1;
+        }else {
+            VThread_Controler[i].pmin = range * i + 1;
+            VThread_Controler[i].pmax = (i+1)*range;
+        }
+        cout << "Thread" << i << " Min:" << VThread_Controler[i].pmin 
+             << " Max:" << VThread_Controler[i].pmax << endl;
+    }
 
-    while (thread_p0.finalizada = false){
+    for (int i = 0; i < core; i++){
+        VThreads.emplace_back(funcao, ref(VThread_Controler[i]));
         this_thread::sleep_for(chrono::seconds(1));
+    }
 
+    for (int i = 0; i< core; i++){
+        VThreads[i].join();
+        //cout << "Thread: " << i << " recolhida\n";
     }
 
     cout << "Fim\n";
