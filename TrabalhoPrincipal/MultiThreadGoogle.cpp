@@ -171,17 +171,17 @@ int main() {
 
     // seta o range de cada Thread
     setRange(ref(Vthread_controler));
-
+    // printa o range de cada Thread
     printRange(ref(Vthread_controler));
-
-    // Fala o range de cada Thread
     
-
     for (int i = 0; i < NUM_THREADS; ++i) {
         Vthreads.emplace_back(initParticles, particles, ref(Vthread_controler[i]));
     }
-    
-    
+
+    printRange(ref(Vthread_controler));
+    setRange(ref(Vthread_controler));
+    printRange(ref(Vthread_controler));
+
     cout << "Iniciando simulacao sequencial de " << NUM_PARTICLES << " particulas...\n";
     
     cout << "Antes #" << " | Particula 0 -> Pos: (" 
