@@ -32,7 +32,7 @@ struct Thread_Controler {
 
 // Inicializa as partículas com posições e velocidades aleatórias
 void initParticles(vector<Particle>& particles, struct Thread_Controler & f0) {
-    srand(100);
+    srand(time(0));
     for (; f0.pmin <= f0.pmax; f0.pmin++) {
         Particle p; // cria a particula
         p.radius = 5.0; // Raio fixo para simplificação
@@ -98,7 +98,7 @@ void updateForces(vector<Particle>& particles) {
                 double dy = particles[j].y - particles[i].y;
                 double distance = sqrt(dx * dx + dy * dy);
 
-                if (distance < DGravity) {
+                if (distance > 0.0 && distance < DGravity) {
                     // Aplica a força da gravidade entre as partículas
                     double force = FGravity / (distance * distance); // Força proporcional à inversa do quadrado da distância 
                     particles[i].vx += force * (dx / distance);
@@ -140,7 +140,7 @@ void printParticle(vector<Particle>& particles, int N, int step) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 1000;
+    const int NUM_PARTICLES = 100;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles(NUM_PARTICLES);
@@ -168,12 +168,10 @@ int main() {
     }
     cout << "Controlers Inicializados\n";
 
-    // printa o range de cada Thread
-    printRange(ref(Vthread_controler));
     // seta o range de cada Thread
     setRange(ref(Vthread_controler));
     // printa o range de cada Thread
-    printRange(ref(Vthread_controler));
+    //printRange(ref(Vthread_controler));
     
     for (int i = 0; i < NUM_THREADS; ++i) {
         Vthreads.emplace_back(initParticles, ref(particles), ref(Vthread_controler[i]));
@@ -185,10 +183,11 @@ int main() {
     }
 
     setRange(ref(Vthread_controler));
-    printRange(ref(Vthread_controler));
+    //printRange(ref(Vthread_controler));
 
-    cout << "Iniciando simulacao sequencial de " << NUM_PARTICLES << " particulas...\n";
+    cout << "Iniciando simulacao em threads de " << NUM_PARTICLES << " particulas...\n";
     
+    // Imprime o estado de uma particula antes da simulacao
     cout << "Antes #" << " | Particula 0 -> Pos: (" 
                       << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
                       << particles[0].vx << ", " << particles[0].vy << ")\n";
@@ -200,7 +199,9 @@ int main() {
 
         if ((step % 5 == 0)) {
             // Imprime o estado de uma particula
-            printParticle(ref(particles), 0, step);
+            cout << "Passo " << step << " | Particula 0 -> Pos: (" 
+            << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
+            << particles[0].vx << ", " << particles[0].vy << ")\n";
         }
     }
 

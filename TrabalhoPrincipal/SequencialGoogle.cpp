@@ -20,7 +20,7 @@ struct Particle {
 
 // Inicializa as partículas com posições e velocidades aleatórias
 void initParticles(vector<Particle>& particles, int numParticles) {
-    srand(100);
+    srand(time(0));
     for (int i = 0; i < numParticles; ++i) {
         Particle p; // cria a particula
         p.radius = 5.0; // Raio fixo para simplificação
@@ -84,7 +84,7 @@ void updateForces(vector<Particle>& particles) {
                 double dy = particles[j].y - particles[i].y;
                 double distance = sqrt(dx * dx + dy * dy);
 
-                if (distance < DGravity) {
+                if (distance > 0.0 && distance < DGravity) {
                     // Aplica a força da gravidade entre as partículas
                     double force = FGravity / (distance * distance); // Força proporcional à inversa do quadrado da distância 
                     particles[i].vx += force * (dx / distance);
@@ -105,7 +105,7 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 100;
+    const int NUM_PARTICLES = 10000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;
@@ -123,7 +123,7 @@ int main() {
         updatePosition(particles);
 
         // Imprime o estado da primeira partícula
-        if ((step % 2 == 0)) {
+        if ((step % 5 == 0)) {
             cout << "Passo " << step << " | Particula 0 -> Pos: (" 
                              << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
                              << particles[0].vx << ", " << particles[0].vy << ")\n";
