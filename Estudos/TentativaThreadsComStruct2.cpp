@@ -1,7 +1,6 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include <string>
 #include <vector>
 using namespace std;
 
@@ -59,7 +58,7 @@ int main() {
         this_thread::sleep_for(chrono::seconds(1));
     }
     cout << endl;
-    
+
     // set o range de cada thread
     for (int i = 0; i < core; i++){
         VThread_Controler[i].pmin = VThread_Controler[i].Bmin;

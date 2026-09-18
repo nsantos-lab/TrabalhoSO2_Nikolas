@@ -43,7 +43,7 @@ void initParticles(vector<Particle>& particles, struct Thread_Controler & f0) {
         p.vx = (rand() % 101) - 50;
         p.vy = (rand() % 101) - 50;
         // coloca a particula em uma posicao especifica
-        particles.insert(particles.begin() + f0.pmin , p);
+        particles[f0.pmin] = p;
     }
     f0.finalizada = true;
 }
@@ -127,10 +127,9 @@ void setRange(vector<Thread_Controler>& Vthread_controler) {
 
 void printRange(vector<Thread_Controler>& Vthread_controler) {
     for (int i = 0; i < NUM_THREADS; ++i) {
-        cout << "Thread Nº " << i << endl;
-        cout << "Range Min: " << Vthread_controler[i].Bpmin << endl;
-        cout << "Range Max: " << Vthread_controler[i].Bpmax << endl;
-        cout << endl;
+        cout << "Thread N: " << i << endl;
+        cout << "Range Min: " << Vthread_controler[i].pmin << endl;
+        cout << "Range Max: " << Vthread_controler[i].pmax << endl;
     }
 }
 
@@ -145,7 +144,7 @@ int main() {
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles(NUM_PARTICLES);
-    vector<thread> Vthreads(NUM_THREADS);
+    vector<thread> Vthreads;
     vector<Thread_Controler> Vthread_controler(NUM_THREADS);
 
     int range = NUM_PARTICLES/NUM_THREADS;
@@ -167,18 +166,24 @@ int main() {
             Vthread_controler[i].Bpmax = (i+1)*range;
         }
     }
-    cout << "Controlers Inicializados\n\n";
+    cout << "Controlers Inicializados\n";
 
+    // printa o range de cada Thread
+    printRange(ref(Vthread_controler));
     // seta o range de cada Thread
     setRange(ref(Vthread_controler));
     // printa o range de cada Thread
     printRange(ref(Vthread_controler));
     
     for (int i = 0; i < NUM_THREADS; ++i) {
-        Vthreads.emplace_back(initParticles, particles, ref(Vthread_controler[i]));
+        Vthreads.emplace_back(initParticles, ref(particles), ref(Vthread_controler[i]));
     }
 
-    printRange(ref(Vthread_controler));
+    // espera as threads acabarem suas funcoes
+    for (auto& thread : Vthreads) {
+        thread.join();
+    }
+
     setRange(ref(Vthread_controler));
     printRange(ref(Vthread_controler));
 
@@ -193,9 +198,9 @@ int main() {
         updateForces(particles);
         updatePosition(particles);
 
-        if ((step % 2 == 0)) {
+        if ((step % 5 == 0)) {
             // Imprime o estado de uma particula
-            printParticle(particles, 0, step);
+            printParticle(ref(particles), 0, step);
         }
     }
 
