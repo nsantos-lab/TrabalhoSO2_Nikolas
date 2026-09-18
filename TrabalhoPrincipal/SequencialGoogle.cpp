@@ -20,9 +20,9 @@ struct Particle {
 
 // Inicializa as partículas com posições e velocidades aleatórias
 void initParticles(vector<Particle>& particles, int numParticles) {
-    srand(time(0));
+    srand(100);
     for (int i = 0; i < numParticles; ++i) {
-        Particle p;
+        Particle p; // cria a particula
         p.radius = 5.0; // Raio fixo para simplificação
         // Garante que a partícula comece totalmente dentro da caixa
         p.x = p.radius + (rand() % static_cast<int>(BOX_WIDTH  - 2 * p.radius + 1));
