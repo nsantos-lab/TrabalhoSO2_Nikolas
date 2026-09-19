@@ -138,7 +138,7 @@ void printParticle(vector<Particle>& particles, int N, int step) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 5000;
+    const int NUM_PARTICLES = 10000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles(NUM_PARTICLES);

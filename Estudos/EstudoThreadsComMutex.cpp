@@ -12,9 +12,10 @@ void funcao_f0 (int &p_int){
     for (int j = 0; j < 10; ++j){
         trava.lock();
         int tmp = *i;
-        tmp = tmp + 1;
-        *i = tmp;
 
+        tmp = tmp + 1;
+        
+        *i = tmp;
         cout << "f0: " << *i << endl;
         trava.unlock();
 
@@ -27,17 +28,16 @@ void funcao_f1 (int &p_int){
     for (int j = 0; j < 10; ++j){
         trava.lock();
         int tmp = *i;
-        tmp = tmp + 1;
-        *i = tmp;
 
+        tmp = tmp + 1;
+        
+        *i = tmp;
         cout << "f1: " << *i << endl;
         trava.unlock();
 
         this_thread::sleep_for(chrono::milliseconds(900));
     }
 }
-
-
 
 int main() {
     int i = 0;
