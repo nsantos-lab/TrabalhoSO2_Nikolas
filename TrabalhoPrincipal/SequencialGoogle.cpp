@@ -15,7 +15,6 @@ struct Particle {
     double x, y;   // Posição
     double vx, vy; // Velocidade
     double radius; // Raio da partícula
-    // double nvx, nvy; // Velocidade a ser atualizada (para evitar interferência durante a atualização)
 };
 
 // Inicializa as partículas com posições e velocidades aleatórias
@@ -105,7 +104,7 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 10000;
+    const int NUM_PARTICLES = 5000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;
