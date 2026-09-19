@@ -5,37 +5,40 @@
 #include <string>
 using namespace std;
 
-mutex trava;
+mutex trava_cout;
+// lock()         tranca o acesso
+// unlock()       destranca o acesso
+// try_lock()     verifica see é possivel trancar
 
 void funcao_f0 (int &p_int){
     int *i = &p_int;
     for (int j = 0; j < 10; ++j){
-        trava.lock();
+        trava_cout.lock();
         int tmp = *i;
 
         tmp = tmp + 1;
         
         *i = tmp;
         cout << "f0: " << *i << endl;
-        trava.unlock();
+        trava_cout.unlock();
 
-        this_thread::sleep_for(chrono::milliseconds(500));
+        //this_thread::sleep_for(chrono::milliseconds(500));
     }
 }
 
 void funcao_f1 (int &p_int){
     int *i = &p_int;
     for (int j = 0; j < 10; ++j){
-        trava.lock();
+        trava_cout.lock();
         int tmp = *i;
 
         tmp = tmp + 1;
-        
+
         *i = tmp;
         cout << "f1: " << *i << endl;
-        trava.unlock();
+        trava_cout.unlock();
 
-        this_thread::sleep_for(chrono::milliseconds(900));
+        //this_thread::sleep_for(chrono::milliseconds(500));
     }
 }
 

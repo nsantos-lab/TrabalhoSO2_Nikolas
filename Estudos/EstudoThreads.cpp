@@ -17,5 +17,6 @@ int main() {
     thread p0(funcao, i, "Hello World!!");
     p0.join();
 
+
     return 0;
 }

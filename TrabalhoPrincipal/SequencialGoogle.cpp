@@ -112,10 +112,6 @@ int main() {
 
     cout << "Iniciando simulacao sequencial de " << NUM_PARTICLES << " particulas...\n"; 
 
-    cout << "Antes #" << " | Particula 0 -> Pos: (" 
-                      << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
-                      << particles[0].vx << ", " << particles[0].vy << ")\n";
-
     // Loop principal da simulação
     for (int step = 0; step < TOTAL_STEPS; ++step) {
         updateForces(particles);

@@ -177,7 +177,7 @@ int main() {
     for (auto& thread : Vthreads) {
         thread.join();
     }
-    Vthreads.clear(); // mesmo as threads tendo recebido join 
+    Vthreads.clear(); // mesmo as threads tendo recebido join
                       // elas continuam a existir dentro do vector
                       // logo nao seria possivel dar join() novamente
     setRange(ref(Vthread_controler));
