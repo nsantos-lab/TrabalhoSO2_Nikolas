@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <thread>
 using namespace std;
+
+#define NUM_THREADS 4 // Número de threads a serem usadas na simulação
 
 // Dimensões do domínio da simulação
 const double BOX_WIDTH = 800.0;
@@ -9,12 +12,18 @@ const double BOX_HEIGHT = 600.0;
 const double GRAVITY = -9.81;
 const double DT = 0.001; // Passo de tempo (Delta t)
 const double DGravity = 50.0; // Distancia máxima para aplicar a gravidade entre partículas
-const double FGravity = 50.0; // Força padrão da gravidade entre partículas
+const double FGravity = 50.0; // Força da gravidade entre partículas
 
 struct Particle {
     double x, y;   // Posição
     double vx, vy; // Velocidade
     double radius; // Raio da partícula
+};
+
+struct Thread_Controler {
+    int id;
+    int pmin;
+    int pmax;
 };
 
 // Inicializa as partículas com posições e velocidades aleatórias
@@ -29,13 +38,15 @@ void initParticles(vector<Particle>& particles, int numParticles) {
         // Velocidades aleatórias entre -50 e 50
         p.vx = (rand() % 101) - 50;
         p.vy = (rand() % 101) - 50;
-        particles.push_back(p);
+        // coloca a particula em uma posicao especifica
+        particles[i] = p;
     }
 }
 
 // Atualiza a física do sistema de forma sequencial
-void updateForces(vector<Particle>& particles) {
-    for (size_t i = 0; i < particles.size(); ++i) {
+void updateForces(vector<Particle>& particles, struct Thread_Controler & f0) {
+    int totalParticles = static_cast<int>(particles.size());
+    for (int i = f0.pmin; i <= f0.pmax; i++) {
         // Aplica a força da gravidade na velocidade vertical
         particles[i].vy += GRAVITY * DT;
 
@@ -56,7 +67,7 @@ void updateForces(vector<Particle>& particles) {
         }
 
         // Trata colisão entre partículas
-        for (size_t j = 0; j < particles.size(); ++j) {
+        for (int j = 0; j < totalParticles; ++j) {
             if (j != i) { // Para não ser a mesma partícula
                 double dx = particles[j].x - particles[i].x;
                 double dy = particles[j].y - particles[i].y;
@@ -70,24 +81,24 @@ void updateForces(vector<Particle>& particles) {
                     particles[j].vx = troca;
                     troca = particles[i].vy;
                     particles[i].vy = particles[j].vy;
-                    particles[j].vy = troca;
+                    particles[j].vy = troca;                   
                 }                
             }
         }
 
         // Trata a gravidade entre particulas
         // Já que as partículas possuem a mesma massa, densidade e raio
-        for (size_t j = 0; j < particles.size(); ++j) {
-            if (j != i) { // Para não ser a mesma partícula
-                double dx = particles[j].x - particles[i].x;
-                double dy = particles[j].y - particles[i].y;
+        for (int j = 0; j < totalParticles; ++j) {
+            if (j != f0.pmin) { // Para não ser a mesma partícula
+                double dx = particles[j].x - particles[f0.pmin].x;
+                double dy = particles[j].y - particles[f0.pmin].y;
                 double distance = sqrt(dx * dx + dy * dy);
 
                 if (distance > 0.0 && distance < DGravity) {
                     // Aplica a força da gravidade entre as partículas
                     double force = FGravity / (distance * distance); // Força proporcional à inversa do quadrado da distância 
-                    particles[i].vx += force * (dx / distance);
-                    particles[i].vy += force * (dy / distance);
+                    particles[f0.pmin].vx += force * (dx / distance);
+                    particles[f0.pmin].vy += force * (dy / distance);
                 }
             }
         }
@@ -95,33 +106,87 @@ void updateForces(vector<Particle>& particles) {
 }
 
 // Atualiza a posição das partículas com base nas forças
-void updatePosition(vector<Particle>& particles) {
-    for (size_t i = 0; i < particles.size(); ++i) {
+void updatePosition(vector<Particle>& particles, struct Thread_Controler & f0) {
+    for (int i = f0.pmin; i <= f0.pmax; i++) {
         // Atualiza a posição com base na velocidade
         particles[i].x += particles[i].vx * DT;
         particles[i].y += particles[i].vy * DT;
     }
 }
 
-int main() {
-    const int NUM_PARTICLES = 10000;
-    const int TOTAL_STEPS = 30; // Número de passos da simulação
+void printRange(vector<Thread_Controler>& Vthread_controler) {
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        cout << "Thread N: " << i << endl;
+        cout << "Range Min: " << Vthread_controler[i].pmin << endl;
+        cout << "Range Max: " << Vthread_controler[i].pmax << endl;
+    }
+}
 
-    vector<Particle> particles;
+void printParticle(vector<Particle>& particles, int N, int step) {
+    cout << "Passo " << step << " | Particula 0 -> Pos: (" 
+    << particles[N].x << ", " << particles[N].y << ") | Vel: (" 
+    << particles[N].vx << ", " << particles[N].vy << ")\n";
+}
+
+int main() {
+    const int NUM_PARTICLES = 100;
+    const int TOTAL_STEPS = 10; // Número de passos da simulação
+
+    vector<Particle> particles(NUM_PARTICLES);
+    vector<thread> Vthreads;
+    vector<Thread_Controler> Vthread_controler(NUM_THREADS);
+
+    int range = NUM_PARTICLES/NUM_THREADS;
+    int rmod  = NUM_PARTICLES%NUM_THREADS;
+    
+    // Inicializa os controlers de cada Thread
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        Vthread_controler[i].id = i;
+
+        if(i==0) { // significa que é o primeiro
+            Vthread_controler[i].pmin = 0;
+            Vthread_controler[i].pmax = range;          
+        }else if(i==NUM_THREADS-1) { // significa que é o ultimo
+            Vthread_controler[i].pmin = i*range + 1;
+            Vthread_controler[i].pmax = (i+1)*range + rmod - 1;
+        }else {
+            Vthread_controler[i].pmin = i*range + 1;
+            Vthread_controler[i].pmax = (i+1)*range;
+        }
+    }
+    cout << "Controlers Inicializados\n";
+
+    // printa o range de cada Thread
+    //printRange(ref(Vthread_controler));
+    
     initParticles(particles, NUM_PARTICLES);
 
-    cout << "Iniciando simulacao sequencial de " << NUM_PARTICLES << " particulas...\n"; 
+    cout << "Iniciando simulacao em threads de " << NUM_PARTICLES << " particulas...\n";
 
     // Loop principal da simulação
     for (int step = 0; step < TOTAL_STEPS; ++step) {
-        updateForces(particles);
-        updatePosition(particles);
 
-        // Imprime o estado da primeira partícula
+        for (int i = 0; i < NUM_THREADS; ++i) {
+            Vthreads.emplace_back(updateForces, ref(particles), ref(Vthread_controler[i]));
+        }
+        for (auto& thread : Vthreads) {
+            thread.join();
+        }
+        Vthreads.clear(); // mesmo as threads tendo recebido join
+                          // elas continuam a existir dentro do vector
+                          // logo nao seria possivel dar join() novamente
+
+        for (int i = 0; i < NUM_THREADS; ++i) {
+            Vthreads.emplace_back(updatePosition, ref(particles), ref(Vthread_controler[i]));
+        }
+        for (auto& thread : Vthreads) {
+            thread.join();
+        }
+        Vthreads.clear();
+
         if ((step % 1 == 0)) {
-            cout << "Passo " << step << " | Particula 0 -> Pos: (" 
-                             << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
-                             << particles[0].vx << ", " << particles[0].vy << ")\n";
+            // Imprime o estado de uma particula
+            printParticle(particles, 0, step);
         }
     }
 

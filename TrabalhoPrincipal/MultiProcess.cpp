@@ -241,93 +241,90 @@ int main(int argc, char* argv[]) {
     // Loop principal da simulação :D
     // O COMECO DO FIM    D:
     for (int step = 0; step < TOTAL_STEPS; ++step) {
+        // Cria os processos filhos com seus ranges e os faz iniciar a função updateForces
         for (int i = 0; i < NUM_PROCESSES; ++i) {
-        int min, max;
-        if(i==0) { // significa que é o primeiro
-            min = 0;
-            max = range;      
-        }else if(i==NUM_PROCESSES-1) { // significa que é o ultimo
-            min = i*range + 1;
-            max = (i+1)*range + rmod - 1;
-        }else {
-            min = i*range + 1;
-            max = (i+1)*range;
+            int min, max;
+            if(i==0) { // significa que é o primeiro
+                min = 0;
+                max = range;      
+            }else if(i==NUM_PROCESSES-1) { // significa que é o ultimo
+                min = i*range + 1;
+                max = (i+1)*range + rmod - 1;
+            }else {
+                min = i*range + 1;
+                max = (i+1)*range;
+            }
+
+            STARTUPINFOA si = {};
+            si.cb = sizeof(si);
+
+            PROCESS_INFORMATION pi = {};
+            string comando = string(argv[0]) + " sou_filho " + to_string(i) 
+            + " " + to_string(min) + " " + to_string(max) + " " + to_string(2); 
+                                        // 1 para initParticles, 2 para updateForces, 3 para updatePosition
+
+            if (!CreateProcessA(NULL, comando.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+                cerr << "Falha ao criar o Processo " << i << ". Erro: " << GetLastError() << "\n";
+                return 1;
+            }
+
+            filhos.push_back(pi);
+            infos.push_back(si);
+            //cout << "Processo Filho " << i << " criado com sucesso.\n";
         }
 
-        STARTUPINFOA si = {};
-        si.cb = sizeof(si);
+        //cout << "Processo Pai criou os filhos e esta aguardando...\n";
+        for (auto& pi : filhos) {
+            WaitForSingleObject(pi.hProcess, INFINITE);
+            CloseHandle(pi.hProcess); // feacha o processo
+            CloseHandle(pi.hThread);  // fecha a thread
+        }
+        filhos.clear();
+        infos.clear();
+        //cout << "--- Todos os processos filhos terminaram de calcular as forcas.\n";
+            
+        // Cria os processos filhos com seus ranges e os faz iniciar a função updatePosition
+        for (int i = 0; i < NUM_PROCESSES; ++i) {
+            int min, max;
+            if(i==0) { // significa que é o primeiro
+                min = 0;
+                max = range;      
+            }else if(i==NUM_PROCESSES-1) { // significa que é o ultimo
+                min = i*range + 1;
+                max = (i+1)*range + rmod - 1;
+            }else {
+                min = i*range + 1;
+                max = (i+1)*range;
+            }
 
-        PROCESS_INFORMATION pi = {};
-        string comando = string(argv[0]) + " sou_filho " + to_string(i) 
-        + " " + to_string(min) + " " + to_string(max) + " " + to_string(2); 
-                                    // 1 para initParticles, 2 para updateForces, 3 para updatePosition
+            STARTUPINFOA si = {};
+            si.cb = sizeof(si);
 
-        if (!CreateProcessA(NULL, comando.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
-            cerr << "Falha ao criar o Processo " << i << ". Erro: " << GetLastError() << "\n";
-            return 1;
+            PROCESS_INFORMATION pi = {};
+            string comando = string(argv[0]) + " sou_filho " + to_string(i) 
+            + " " + to_string(min) + " " + to_string(max) + " " + to_string(3); 
+                                        // 1 para initParticles, 2 para updateForces, 3 para updatePosition
+
+            if (!CreateProcessA(NULL, comando.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+                cerr << "Falha ao criar o Processo " << i << ". Erro: " << GetLastError() << "\n";
+                return 1;
+            }
+
+            filhos.push_back(pi);
+            infos.push_back(si);
+
+            //cout << "Processo Filho " << i << " criado com sucesso.\n";
         }
 
-        filhos.push_back(pi);
-        infos.push_back(si);
-
-        //cout << "Processo Filho " << i << " criado com sucesso.\n";
-    }
-
-    //cout << "Processo Pai criou os filhos e esta aguardando...\n";
-
-    for (auto& pi : filhos) {
-        WaitForSingleObject(pi.hProcess, INFINITE);
-        CloseHandle(pi.hProcess); // feacha o processo
-        CloseHandle(pi.hThread);  // fecha a thread
-    }
-    filhos.clear();
-    infos.clear();
-    //cout << "--- Todos os processos filhos terminaram de calcular as forcas.\n";
-        
-    // Outra rodada de processos para atualizar as posições
-    for (int i = 0; i < NUM_PROCESSES; ++i) {
-        int min, max;
-        if(i==0) { // significa que é o primeiro
-            min = 0;
-            max = range;      
-        }else if(i==NUM_PROCESSES-1) { // significa que é o ultimo
-            min = i*range + 1;
-            max = (i+1)*range + rmod - 1;
-        }else {
-            min = i*range + 1;
-            max = (i+1)*range;
+        //cout << "Processo Pai criou os filhos e esta aguardando...\n";
+        for (auto& pi : filhos) {
+            WaitForSingleObject(pi.hProcess, INFINITE);
+            CloseHandle(pi.hProcess); // feacha o processo
+            CloseHandle(pi.hThread);  // fecha a thread
         }
-
-        STARTUPINFOA si = {};
-        si.cb = sizeof(si);
-
-        PROCESS_INFORMATION pi = {};
-        string comando = string(argv[0]) + " sou_filho " + to_string(i) 
-        + " " + to_string(min) + " " + to_string(max) + " " + to_string(3); 
-                                    // 1 para initParticles, 2 para updateForces, 3 para updatePosition
-
-        if (!CreateProcessA(NULL, comando.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
-            cerr << "Falha ao criar o Processo " << i << ". Erro: " << GetLastError() << "\n";
-            return 1;
-        }
-
-        filhos.push_back(pi);
-        infos.push_back(si);
-
-        //cout << "Processo Filho " << i << " criado com sucesso.\n";
-    }
-
-    //cout << "Processo Pai criou os filhos e esta aguardando...\n";
-
-    for (auto& pi : filhos) {
-        WaitForSingleObject(pi.hProcess, INFINITE);
-        CloseHandle(pi.hProcess); // feacha o processo
-        CloseHandle(pi.hThread);  // fecha a thread
-    }
-    filhos.clear();
-    infos.clear();
-    //cout << "--- Todos os processos filhos terminaram de atualizar a posicoes.\n";
-
+        filhos.clear();
+        infos.clear();
+        //cout << "--- Todos os processos filhos terminaram de atualizar a posicoes.\n";
 
         if ((step % 5 == 0)) {
             // Imprime o estado de uma particula
