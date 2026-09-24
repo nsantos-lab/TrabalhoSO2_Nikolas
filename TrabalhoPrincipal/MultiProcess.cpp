@@ -188,6 +188,7 @@ int main(int argc, char* argv[]) {
     int range = NUM_PARTICLES/NUM_PROCESSES;
     int rmod  = NUM_PARTICLES%NUM_PROCESSES;
 
+    // cria os processos filhos com seus ranges e os faz iniciar a função initParticles
     for (int i = 0; i < NUM_PROCESSES; ++i) {
         int min, max;
         if(i==0) { // significa que é o primeiro
@@ -221,7 +222,6 @@ int main(int argc, char* argv[]) {
     }
 
     //cout << "Processo Pai criou os filhos e esta aguardando...\n";
-
     for (auto& pi : filhos) {
         WaitForSingleObject(pi.hProcess, INFINITE);
         CloseHandle(pi.hProcess); // feacha o processo
@@ -237,9 +237,6 @@ int main(int argc, char* argv[]) {
     << shared->particles[0].vx << ", " << shared->particles[0].vy << ")\n";
     */
     
-
-
-
     cout << "Iniciando simulacao em processos de " << NUM_PARTICLES << " particulas...\n";
     // Loop principal da simulação :D
     // O COMECO DO FIM    D:
