@@ -229,7 +229,17 @@ int main(int argc, char* argv[]) {
             + " " + to_string(min) + " " + to_string(max) + " " + to_string(1); 
                                         // 1 para updateForces, 2 para updateVelocity, 3 para updatePosition
 
-            if (!CreateProcessA(NULL, comando.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+            if (!CreateProcessA(NULL, // É o caminho do executável, NULL significa que será usado argv[0]
+                            comando.data(), // São os argumentos passados para o processo filho
+                            NULL, // Segurançaf do processo, NULL significa que o processo filho não terá segurança especial
+                            NULL, // Segurança da thread, NULL significa que a thread do processo filho não terá segurança especial
+                            FALSE, // Se o processo filho herdará handles do processo pai, FALSE significa que não herdará
+                            0, // Flags de criação do processo, 0 significa que não há flags especiais
+                            NULL, // Ponteiro para o bloco de ambiente do processo filho, NULL significa que o processo filho herdará o ambiente do processo pai
+                            NULL, // Ponteiro para o diretório de trabalho do processo filho, NULL significa que o processo filho herdará o diretório de trabalho do processo pai
+                            &si, // Ponteiro para a estrutura STARTUPINFOA, que contém informações sobre como o processo filho deve ser iniciado
+                            &pi //Ponteiro para a estrutura PROCESS_INFORMATION, que receberá informações sobre o processo filho criado     
+                            )) {
                 cerr << "Falha ao criar o Processo " << i << ". Erro: " << GetLastError() << "\n";
                 return 1;
             }
