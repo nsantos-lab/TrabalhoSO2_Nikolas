@@ -19,7 +19,7 @@ struct Particle {
 
 // Inicializa as partículas com posições e velocidades aleatórias
 void initParticles(vector<Particle>& particles, int numParticles) {
-    srand(100);
+    srand(time(0));
     for (int i = 0; i < numParticles; ++i) {
         Particle p; // cria a particula
         p.radius = 5.0; // Raio fixo para simplificação
@@ -118,7 +118,7 @@ int main() {
         updatePosition(particles);
 
         // Imprime o estado da primeira partícula
-        if ((step % 1 == 0)) {
+        if ((step % 5 == 0)) {
             cout << "Passo " << step << " | Particula 0 -> Pos: (" 
                              << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
                              << particles[0].vx << ", " << particles[0].vy << ")\n";
