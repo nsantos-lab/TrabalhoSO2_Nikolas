@@ -111,8 +111,8 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 100;
-    const int TOTAL_STEPS = 10; // Número de passos da simulação
+    const int NUM_PARTICLES = 10000;
+    const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles;
     initParticles(particles, NUM_PARTICLES);
@@ -126,7 +126,7 @@ int main() {
         updatePosition(particles);
 
         // Imprime o estado da primeira partícula
-        if ((step % 1 == 0)) {
+        if ((step % 5 == 0)) {
             cout << "Passo " << step << " | Particula 0 -> Pos: (" 
                              << particles[0].x << ", " << particles[0].y << ") | Vel: (" 
                              << particles[0].Fvx << ", " << particles[0].Fvy << ")\n";

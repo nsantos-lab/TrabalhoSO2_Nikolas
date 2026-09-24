@@ -88,16 +88,16 @@ void updateForces(vector<Particle>& particles, struct Thread_Controler & f0) {
         // Trata a gravidade entre particulas
         // Já que as partículas possuem a mesma massa, densidade e raio
         for (int j = 0; j < totalParticles; ++j) {
-            if (j != f0.pmin) { // Para não ser a mesma partícula
-                double dx = particles[j].x - particles[f0.pmin].x;
-                double dy = particles[j].y - particles[f0.pmin].y;
+            if (j != i) { // Para não ser a mesma partícula
+                double dx = particles[j].x - particles[i].x;
+                double dy = particles[j].y - particles[i].y;
                 double distance = sqrt(dx * dx + dy * dy);
 
                 if (distance > 0.0 && distance < DGravity) {
                     // Aplica a força da gravidade entre as partículas
                     double force = FGravity / (distance * distance); // Força proporcional à inversa do quadrado da distância 
-                    particles[f0.pmin].Avx += force * (dx / distance);
-                    particles[f0.pmin].Avy += force * (dy / distance);
+                    particles[i].Avx += force * (dx / distance);
+                    particles[i].Avy += force * (dy / distance);
                 }
             }
         }
@@ -136,8 +136,8 @@ void printParticle(vector<Particle>& particles, int N, int step) {
 }
 
 int main() {
-    const int NUM_PARTICLES = 100;
-    const int TOTAL_STEPS = 10; // Número de passos da simulação
+    const int NUM_PARTICLES = 10000;
+    const int TOTAL_STEPS = 30; // Número de passos da simulação
 
     vector<Particle> particles(NUM_PARTICLES);
     vector<thread> Vthreads;
@@ -202,7 +202,7 @@ int main() {
         }
         Vthreads.clear();
 
-        if ((step % 1 == 0)) {
+        if ((step % 5 == 0)) {
             // Imprime o estado de uma particula
             printParticle(particles, 0, step);
         }
