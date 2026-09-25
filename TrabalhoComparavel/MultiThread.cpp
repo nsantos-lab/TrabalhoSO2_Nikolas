@@ -2,7 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <thread>
-#include <cstdlib>
+#include <chrono>
+//#include <cstdlib>
 using namespace std;
 
 // Dimensões do domínio da simulação
@@ -136,6 +137,7 @@ void printParticle(vector<Particle>& particles, int N, int step) {
 }
 
 int main(int argc, char* argv[]) {
+    auto inicio = chrono::high_resolution_clock::now();
     int NUM_THREADS;
 
     if (argc != 2) {
@@ -223,5 +225,8 @@ int main(int argc, char* argv[]) {
     }
 
     cout << "Simulacao concluida com sucesso.\n";
+    auto fim = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duracao = fim - inicio;
+    cout << "O processo demorou: " << duracao.count() << " ms" << endl;
     return 0;
 }

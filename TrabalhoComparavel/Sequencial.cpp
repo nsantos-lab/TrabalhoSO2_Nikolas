@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <chrono>
 using namespace std;
 
 // Dimensões do domínio da simulação
@@ -111,6 +112,8 @@ void updatePosition(vector<Particle>& particles) {
 }
 
 int main() {
+    auto inicio = chrono::high_resolution_clock::now();
+
     const int NUM_PARTICLES = 10000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
@@ -133,6 +136,9 @@ int main() {
         }
     }
 
-    cout << "Simulacao concluida com sucesso.\n";
+    cout << "Simulacao concluida com sucesso.\n"; 
+    auto fim = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duracao = fim - inicio;
+    cout << "O processo demorou: " << duracao.count() << " ms" << endl;
     return 0;
 }

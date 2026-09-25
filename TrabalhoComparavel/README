@@ -13,3 +13,10 @@ o numero no final serve para definir a quantidade de Threads
     .\output\MultiThread.exe 4
 
 Se ouver erro em MultiProcess tente compilar com -std=c++17 ao inves de -std=c++11
+
+
+Sequencial
+    O processo demorou: 124352 ms
+
+Thread
+    
