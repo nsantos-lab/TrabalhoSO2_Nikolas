@@ -15,5 +15,5 @@ RUN g++ -std=c++17 -O2 -Wall -Wextra Sequencial.cpp -o Sequencial \
 	&& g++ -std=c++17 -O2 -Wall -Wextra MultiProcess.cpp -o MultiProcess
 
 # Executando
-CMD ["./MultiThread", "4"]
+CMD ["./Sequencial"]
 # CMD ["time", "./exemplo_thread"]

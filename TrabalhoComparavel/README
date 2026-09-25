@@ -1,7 +1,6 @@
 Trabalho de Nikolas
 
 
-
 Entrar na pasta // isso fica diferente dependendo de onde essa pasta está
     cd 'c:\Users\annio\TrabalhoSO2_Nikolas\TrabalhoComparavel'     
 
@@ -16,7 +15,38 @@ Se ouver erro em MultiProcess tente compilar com -std=c++17 ao inves de -std=c++
 
 
 Sequencial
-    O processo demorou: 124352 ms
+    O processo demorou: 30103.4 ms ou 30.10 segundos
+    O processo demorou: 30333.0 ms ou 30.33 segundos
+    O processo demorou: 30344.7 ms ou 30.34 segundos
 
-Thread
-    
+2 Threads
+    O processo demorou: 15150.1 ms ou 15.15 segundos
+    O processo demorou: 15491.7 ms ou 15.49 segundos
+    O processo demorou: 15705.0 ms ou 15.70 segundos
+
+4 Threads
+    O processo demorou: 10109.7 ms ou 10.10 segundos
+    O processo demorou: 07884.8 ms ou 07.88 segundos
+    O processo demorou: 08081.7 ms ou 08.08 segundos
+
+8 Threads
+    O processo demorou: 04618.7 ms ou 4.61 segundos
+    O processo demorou: 04634.8 ms ou 4.63 segundos
+    O processo demorou: 04654.9 ms ou 4.65 segundos
+
+
+2 Processos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+
+4 Processos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+
+8 Processos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+

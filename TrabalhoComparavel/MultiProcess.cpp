@@ -3,9 +3,10 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <chrono>
 using namespace std;
 
-#define NUM_PARTICLES 10000 // Número de partículas na simulação
+#define NUM_PARTICLES 5000 // Número de partículas na simulação
 #define TOTAL_STEPS 30 // Número de passos da simulação
 
 // Dimensões do domínio da simulação
@@ -171,6 +172,7 @@ int main(int argc, char* argv[]) {
 
     // 3. CÓDIGO DO PROCESSO PAI
     cout << "--- Processo PAI Iniciado ---\n";
+    auto inicio = chrono::high_resolution_clock::now();
 
     // Cria a memória compartilhada para as partículas
     HANDLE hMap = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, 
@@ -369,5 +371,8 @@ int main(int argc, char* argv[]) {
     cout << "--- Memoria compartilhada liberada.\n";
 
     cout << "--- Processo PAI finalizado! ---\n";
+    auto fim = chrono::high_resolution_clock::now();
+    chrono::duration<double, milli> duracao = fim - inicio;
+    cout << "O processo demorou: " << duracao.count() << " ms" << endl;
     return 0;
 }
