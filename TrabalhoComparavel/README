@@ -4,71 +4,60 @@ Trabalho de Nikolas
 Entrar na pasta // isso fica diferente dependendo de onde essa pasta está
     cd 'c:\Users\annio\TrabalhoSO2_Nikolas\TrabalhoComparavel'     
 
-Compilar o programa, estando dentro da pasta TrabalhoComparavel
-    g++ -std=c++11 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
-
-Para executar o programa, estando dentro da pasta TrabalhoComparavel, 
-o numero no final serve para definir a quantidade de Threads
-    .\output\MultiThread.exe 4
-
-Se ouver erro em MultiProcess tente compilar com -std=c++17 ao inves de -std=c++11
 
 
 Sequencial
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-
-
-g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
-.\output\MultiThread.exe 2
-2 Threads
-    O processo demorou: 1617.91 ms ou 1.61 segundos
-    O processo demorou: 1618.53 ms ou 1.61 segundos
-    O processo demorou: 1598.37 ms ou 1.59 segundos
-
-g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe 
-.\output\MultiThread.exe 4
-4 Threads
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-
-g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
-.\output\MultiThread.exe 8
-8 Threads
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-
-
+    O processo demorou: 12591.8 ms ou 12.59 segundos
+    O processo demorou: 12605.8 ms ou 12.60 segundos
+    O processo demorou: 12582.0 ms ou 12.58 segundos
 
 
 //////////////////////////////////////////////////
 
 
+g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+.\output\MultiThread.exe 2
+2 Threads
+    O processo demorou: 6354.54 ms ou 6.35 segundos
+    O processo demorou: 6354.10 ms ou 6.35 segundos
+    O processo demorou: 6427.15 ms ou 6.42 segundos
 
+g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe 
+.\output\MultiThread.exe 4
+4 Threads
+    O processo demorou: 3195.11 ms ou 3.19 segundos
+    O processo demorou: 3220.93 ms ou 3.22 segundos
+    O processo demorou: 3201.95 ms ou 3.20 segundos
+
+g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+.\output\MultiThread.exe 8
+8 Threads
+    O processo demorou: 1978.21 ms ou 1.97 segundos
+    O processo demorou: 1961.68 ms ou 1.96 segundos
+    O processo demorou: 2004.66 ms ou 2.00 segundos
+
+
+//////////////////////////////////////////////////
 
 
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 2
 2 Processos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
+    O processo demorou: 7176.72 ms ou 7.17 segundos
+    O processo demorou: 7154.85 ms ou 7.15 segundos
+    O processo demorou: 7201.15 ms ou 7.20 segundos
 
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 4
 4 Processos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-
+    O processo demorou: 4295.11 ms ou 4.29 segundos
+    O processo demorou: 4256.75 ms ou 4.25 segundos
+    O processo demorou: 4290.27 ms ou 4.29 segundos
 
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 8
 8 Processos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
+    O processo demorou: 3720.89 ms ou 3.72 segundos
+    O processo demorou: 3829.09 ms ou 3.82 segundos
+    O processo demorou: 3799.41 ms ou 3.79 segundos
 
