@@ -6,7 +6,7 @@
 #include <chrono>
 using namespace std;
 
-#define NUM_PARTICLES 5000 // Número de partículas na simulação
+#define NUM_PARTICLES 10000 // Número de partículas na simulação
 #define TOTAL_STEPS 30 // Número de passos da simulação
 
 // Dimensões do domínio da simulação
