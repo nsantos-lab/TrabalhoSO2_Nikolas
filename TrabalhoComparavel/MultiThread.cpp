@@ -2,9 +2,8 @@
 #include <vector>
 #include <cmath>
 #include <thread>
+#include <cstdlib>
 using namespace std;
-
-#define NUM_THREADS 4 // Número de threads a serem usadas na simulação
 
 // Dimensões do domínio da simulação
 const double BOX_WIDTH = 800.0;
@@ -117,11 +116,12 @@ void updatePosition(vector<Particle>& particles, struct Thread_Controler & f0) {
     for (int i = f0.pmin; i <= f0.pmax; i++) {
         // Atualiza a posição com base na velocidade
         particles[i].x += particles[i].Fvx * DT;
-        particles[i].y += particles[i].Fvy * DT;
+        particles[i].y += particles[i].Fvy * DT
+        ;
     }
 }
 
-void printRange(vector<Thread_Controler>& Vthread_controler) {
+void printRange(vector<Thread_Controler>& Vthread_controler, int NUM_THREADS) {
     for (int i = 0; i < NUM_THREADS; ++i) {
         cout << "Thread N: " << i << endl;
         cout << "Range Min: " << Vthread_controler[i].pmin << endl;
@@ -135,7 +135,21 @@ void printParticle(vector<Particle>& particles, int N, int step) {
     << particles[N].Fvx << ", " << particles[N].Fvy << ")\n";
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    int NUM_THREADS;
+
+    if (argc != 2) {
+        cerr << "Uso: " << argv[0] << " <numero_de_threads>\n";
+        return 1;
+    }
+
+    NUM_THREADS = stoi(argv[1]);
+
+    if (NUM_THREADS < 2) {
+        cerr << "O numero de threads deve ser pelo menos 2.\n";
+        return 1;
+    }
+
     const int NUM_PARTICLES = 10000;
     const int TOTAL_STEPS = 30; // Número de passos da simulação
 
@@ -164,7 +178,7 @@ int main() {
     cout << "Controlers Inicializados\n";
 
     // printa o range de cada Thread
-    //printRange(ref(Vthread_controler));
+    //printRange(ref(Vthread_controler, NUM_THREADS));
     
     initParticles(particles, NUM_PARTICLES);
 

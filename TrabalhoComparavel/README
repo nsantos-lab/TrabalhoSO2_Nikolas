@@ -1,0 +1,15 @@
+Trabalho de Nikolas
+
+
+
+Entrar na pasta // isso fica diferente dependendo de onde essa pasta está
+    cd 'c:\Users\annio\TrabalhoSO2_Nikolas\TrabalhoComparavel'     
+
+Compilar o programa, estando dentro da pasta TrabalhoComparavel
+    g++ -std=c++11 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+
+Para executar o programa, estando dentro da pasta TrabalhoComparavel, 
+o numero no final serve para definir a quantidade de Threads
+    .\output\MultiThread.exe 4
+
+Se ouver erro em MultiProcess tente compilar com -std=c++17 ao inves de -std=c++11
