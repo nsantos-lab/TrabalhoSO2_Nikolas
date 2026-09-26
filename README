@@ -5,6 +5,14 @@ Entrar na pasta // isso fica diferente dependendo de onde essa pasta está
 
 
 
+
+Problemas com o docker
+    docker desktop engine use windows
+    // caso isso nao seja possivel é porque o Docker Desktop foi instalado 
+       sem a opcao de windows container, para resolver isso se deve reinstala-lo com essa opcao ativa:
+
+
+
 Sequencial
     O processo demorou: 12591.8 ms ou 12.59 segundos
     O processo demorou: 12605.8 ms ou 12.60 segundos
