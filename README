@@ -5,7 +5,8 @@ Entrar na pasta // isso fica diferente dependendo de onde essa pasta está
 
 
 
-
+docker build -f Dockerfile.windows -t trabalho-comparavel-win .
+docker run --rm trabalho-comparavel-win
 Problemas com o docker
     docker desktop engine use windows
     // caso isso nao seja possivel é porque o Docker Desktop foi instalado 
