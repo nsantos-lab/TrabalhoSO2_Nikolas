@@ -11,9 +11,9 @@ COPY TrabalhoComparavel/MultiProcess.cpp .
 
 # Compilando arquivo .cpp
 RUN g++ -std=c++17 -O2 -Wall -Wextra Sequencial.cpp -o Sequencial \
-	&& g++ -std=c++17 -O2 -Wall -Wextra -pthread MultiThread.cpp -o MultiThread \
-	&& g++ -std=c++17 -O2 -Wall -Wextra MultiProcess.cpp -o MultiProcess
+ && g++ -std=c++17 -O2 -Wall -Wextra -pthread MultiThread.cpp -o MultiThread \
+ && g++ -std=c++17 -O2 -Wall -Wextra MultiProcess.cpp -o MultiProcess
 
-# Executando
+# Executando somente o Sequencial, para testar o Dockerfile.
 CMD ["./Sequencial"]
-# CMD ["time", "./exemplo_thread"]
+# CMD ["time", "./Sequencial"]
