@@ -146,9 +146,9 @@ MultiThread 2
     O processo demorou: 13074.5 ms ou 13.07 segundos
 
 MultiThread 4
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
+    O processo demorou: 13153.4 ms ou 13.15 segundos
+    O processo demorou: 13151.5 ms ou 13.15 segundos
+    O processo demorou: 13121.6 ms ou 13.12 segundos
 
 MultiThread 8
     O processo demorou:  ms ou  segundos
