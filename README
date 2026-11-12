@@ -13,9 +13,12 @@ Problemas com o docker
     // caso isso nao seja possivel é porque o Docker Desktop foi instalado 
        sem a opcao de windows container, para resolver isso se deve reinstala-lo com essa opcao ativa:
 
+Sequencial sem o -O2 e FORA DO DOCKER
+    O processo demorou: 128482 ms ou 128.48 segundos
+    O processo demorou: 125869 ms ou 125.86 segundos
+    O processo demorou: 127033 ms ou 127.03 segundos
 
-
-Sequencial
+Sequencial com o -o2 e FORA DO DOCKER
     O processo demorou: 12591.8 ms ou 12.59 segundos
     O processo demorou: 12605.8 ms ou 12.60 segundos
     O processo demorou: 12582.0 ms ou 12.58 segundos
@@ -23,7 +26,15 @@ Sequencial
 
 //////////////////////////////////////////////////
 
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+.\output\MultiThread.exe 2
+2 Threads
+    O processo demorou: 59566.0 ms ou 59.56 segundos
+    O processo demorou: 60692.2 ms ou 60.69 segundos
+    O processo demorou: 60146.6 ms ou 60.14 segundos
 
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
 .\output\MultiThread.exe 2
 2 Threads
@@ -31,6 +42,17 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
     O processo demorou: 6354.10 ms ou 6.35 segundos
     O processo demorou: 6427.15 ms ou 6.42 segundos
 
+//////////////////////////////////////////////////
+
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+.\output\MultiThread.exe 4
+4 Threads
+    O processo demorou: 31093.3 ms ou 31.09 segundos
+    O processo demorou: 29684.4 ms ou 29.68 segundos
+    O processo demorou: 29891.1 ms ou 29.89 segundos
+
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe 
 .\output\MultiThread.exe 4
 4 Threads
@@ -38,6 +60,17 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
     O processo demorou: 3220.93 ms ou 3.22 segundos
     O processo demorou: 3201.95 ms ou 3.20 segundos
 
+//////////////////////////////////////////////////
+
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
+.\output\MultiThread.exe 8
+8 Threads
+    O processo demorou: 17463.0 ms ou 17.46 segundos
+    O processo demorou: 17666.4 ms ou 17.66 segundos
+    O processo demorou: 17933.4 ms ou 17.93 segundos
+
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
 .\output\MultiThread.exe 8
 8 Threads
@@ -45,10 +78,17 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiThread.cpp -o output\MultiThread.exe
     O processo demorou: 1961.68 ms ou 1.96 segundos
     O processo demorou: 2004.66 ms ou 2.00 segundos
 
-
 //////////////////////////////////////////////////
 
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
+.\output\MultiProcess.exe 2
+2 Processos
+    O processo demorou: 18466.1 ms ou 18.46 segundos
+    O processo demorou: 18422.1 ms ou 18.42 segundos
+    O processo demorou: 18359.8 ms ou 18.35 segundos
 
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 2
 2 Processos
@@ -56,6 +96,17 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
     O processo demorou: 7154.85 ms ou 7.15 segundos
     O processo demorou: 7201.15 ms ou 7.20 segundos
 
+//////////////////////////////////////////////////
+
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
+.\output\MultiProcess.exe 4
+4 Processos
+    O processo demorou: 10384.0 ms ou 10.38 segundos
+    O processo demorou: 10412.5 ms ou 10.41 segundos
+    O processo demorou: 10373.2 ms ou 10.37 segundos
+
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 4
 4 Processos
@@ -63,6 +114,17 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
     O processo demorou: 4256.75 ms ou 4.25 segundos
     O processo demorou: 4290.27 ms ou 4.29 segundos
 
+//////////////////////////////////////////////////
+
+SEM O -O2 e FORA DO DOCKER
+g++ -std=c++17 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
+.\output\MultiProcess.exe 8
+8 Processos
+    O processo demorou: 7620.96 ms ou 7.62 segundos
+    O processo demorou: 7786.37 ms ou 7.78 segundos
+    O processo demorou: 7966.33 ms ou 7.96 segundos
+
+COM O -O2 e FORA DO DOCKER
 g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 .\output\MultiProcess.exe 8
 8 Processos
@@ -70,3 +132,6 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
     O processo demorou: 3829.09 ms ou 3.82 segundos
     O processo demorou: 3799.41 ms ou 3.79 segundos
 
+//////////////////////////////////////////////////
+
+DENTRO DO DOCKER CPU=1
