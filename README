@@ -170,6 +170,84 @@ MultiProcess 4
     O processo demorou: 14410.9 ms ou 14.41 segundos
 
 MultiProcess 8
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
+    O processo demorou: 15643.1 ms ou 15.64 segundos
+    O processo demorou: 15914.0 ms ou 15.91 segundos
+    O processo demorou: 15764.9 ms ou 15.76 segundos
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+DENTRO DO DOCKER CPU=2 e COM -O2
+Sequencial
+    O processo demorou: 12694.0 ms ou 12.69 segundos
+    O processo demorou: 12706.3 ms ou 12.70 segundos
+    O processo demorou: 12702.6 ms ou 12.70 segundos
+
+MultiThread 2
+    O processo demorou: 6856.71 ms ou 6.85 segundos
+    O processo demorou: 6827.46 ms ou 6.82 segundos
+    O processo demorou: 6890.47 ms ou 6.89 segundos
+
+MultiThread 4
+    O processo demorou: 7195.28 ms ou 7.19 segundos
+    O processo demorou: 7414.22 ms ou 7.41 segundos
+    O processo demorou: 7250.02 ms ou 7.25 segundos
+
+MultiThread 8
+    O processo demorou: 6986.77 ms ou 6.98 segundos
+    O processo demorou: 7045.14 ms ou 7.04 segundos
+    O processo demorou: 6808.94 ms ou 6.80 segundos
+
+MultiProcess 2
+    O processo demorou: 7412.87 ms ou 7.41 segundos
+    O processo demorou: 7175.43 ms ou 7.17 segundos
+    O processo demorou: 7280.41 ms ou 7.28 segundos
+
+MultiProcess 4
+    O processo demorou: 8027.50 ms ou 8.02 segundos
+    O processo demorou: 7813.23 ms ou 7.81 segundos
+    O processo demorou: 7785.91 ms ou 7.78 segundos
+
+MultiProcess 8
+    O processo demorou: 8695.24 ms ou 8.69 segundos
+    O processo demorou: 8609.57 ms ou 8.60 segundos
+    O processo demorou: 8504.73 ms ou 8.50 segundos
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+DENTRO DO DOCKER CPU=4 e COM -O2
+Sequencial
+    O processo demorou: 12745.4 ms ou 12.74 segundos
+    O processo demorou: 12657.7 ms ou 12.65 segundos
+    O processo demorou: 12813.7 ms ou 12.81 segundos
+
+MultiThread 2
+    O processo demorou: 6478.41 ms ou 6.47 segundos
+    O processo demorou: 6632.84 ms ou 6.63 segundos
+    O processo demorou: 6572.12 ms ou 6.57 segundos
+
+MultiThread 4
+    O processo demorou: 3950.60 ms ou 3.95 segundos
+    O processo demorou: 3580.32 ms ou 3.58 segundos
+    O processo demorou: 3677.96 ms ou 3.67 segundos
+
+MultiThread 8
+    O processo demorou: 3754.81 ms ou 3.75 segundos
+    O processo demorou: 3819.30 ms ou 3.81 segundos
+    O processo demorou: 3751.87 ms ou 3.75 segundos
+
+MultiProcess 2
+    O processo demorou: 6856.41 ms ou 6.85 segundos
+    O processo demorou: 6906.30 ms ou 6.90 segundos
+    O processo demorou: 6886.26 ms ou 6.88 segundos
+
+MultiProcess 4
+    O processo demorou: 4249.93 ms ou 4.24 segundos
+    O processo demorou: 4284.38 ms ou 4.28 segundos
+    O processo demorou: 4088.58 ms ou 4.08 segundos
+
+MultiProcess 8
+    O processo demorou: 4561.19 ms ou 4.56 segundos
+    O processo demorou: 4475.30 ms ou 4.47 segundos
+    O processo demorou: 4657.15 ms ou 4.65 segundos
