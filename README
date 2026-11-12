@@ -165,9 +165,9 @@ MultiProcess 2
     O processo demorou: 14028.5 ms ou 14.02 segundos
 
 MultiProcess 4
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
-    O processo demorou:  ms ou  segundos
+    O processo demorou: 14935.8 ms ou 14.93 segundos
+    O processo demorou: 14935.2 ms ou 14.93 segundos
+    O processo demorou: 14410.9 ms ou 14.41 segundos
 
 MultiProcess 8
     O processo demorou:  ms ou  segundos
