@@ -9,4 +9,4 @@ COPY TrabalhoComparavel/output/Sequencial.exe .
 COPY TrabalhoComparavel/output/MultiThread.exe .
 COPY TrabalhoComparavel/output/MultiProcess.exe .
 
-CMD ["cmd", "/S", "/C", "Sequencial.exe && MultiThread.exe 4 && MultiProcess.exe 4"]
+CMD ["cmd", "/S", "/C", "Sequencial.exe"]
