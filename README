@@ -135,3 +135,7 @@ g++ -std=c++17 -O2 -Wall -Wextra -g3 MultiProcess.cpp -o output\MultiProcess.exe
 //////////////////////////////////////////////////
 
 DENTRO DO DOCKER CPU=1
+Sequencial
+    O processo demorou: 13623.2 ms ou 13.62 segundos
+    O processo demorou: 13101.5 ms ou 13.10 segundos
+    O processo demorou: 13149.9 ms ou 13.14 segundos
