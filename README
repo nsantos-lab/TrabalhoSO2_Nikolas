@@ -8,6 +8,10 @@ docker build -f Dockerfile.windows -t trabalho-comparavel-win .
 docker run --rm trabalho-comparavel-win
 docker run --rm -it trabalho-comparavel-win
 
+cd C:\Users\annio\TrabalhoSO2_Nikolas
+>> docker build -f Dockerfile.windows -t trabalho-comparavel-win .
+>> docker run --rm -it --cpus=1 trabalho-comparavel-win
+
 Problemas com o docker
     docker desktop engine use windows
     // caso isso nao seja possivel é porque o Docker Desktop foi instalado 
@@ -154,3 +158,18 @@ MultiThread 8
     O processo demorou: 13265.7 ms ou 13.26 segundos
     O processo demorou: 13252.9 ms ou 13.25 segundos
     O processo demorou: 13271.1 ms ou 13.27 segundos
+
+MultiProcess 2
+    O processo demorou: 13863.5 ms ou 13.86 segundos
+    O processo demorou: 13914.2 ms ou 13.91 segundos
+    O processo demorou: 14028.5 ms ou 14.02 segundos
+
+MultiProcess 4
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+
+MultiProcess 8
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
+    O processo demorou:  ms ou  segundos
